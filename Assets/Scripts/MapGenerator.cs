@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField] private Tilemap map;
-    [SerializeField] private Tile chunk;
+    [SerializeField] private Tile[] chunks;
     private int[] dx = { 1, 1, 0, -1, -1, -1, 0, 1 };
     private int[] dy = { 0, -1, -1, -1, 0, 1, 1, 1 };
     private List<Vector3Int> checkListPos = new List<Vector3Int>();
@@ -16,12 +16,12 @@ public class MapGenerator : MonoBehaviour
     {
         Vector3Int cellPos = map.WorldToCell(playerPos);
 
-        map.SetTile(cellPos, chunk);
+        map.SetTile(cellPos, GetRandomChunk());
         checkListPos.Add(cellPos);
         for (int i = 0; i < 8; i++)
         {
             Vector3Int loadPos = new Vector3Int(cellPos.x + dx[i], cellPos.y + dy[i], 0);
-            map.SetTile(loadPos, chunk);
+            map.SetTile(loadPos, GetRandomChunk());
             checkListPos.Add(loadPos);
         }
 
@@ -39,14 +39,21 @@ public class MapGenerator : MonoBehaviour
 
     private void LoadChunk(Vector3Int pos)
     {
+        List<Vector3Int> tmpList = new List<Vector3Int>(checkListPos);
         checkListPos.Clear();
 
-        map.SetTile(pos, chunk);
+        if (!tmpList.Contains(pos))
+        {
+            map.SetTile(pos, GetRandomChunk());
+        }
         checkListPos.Add(pos);
         for (int i = 0; i < 8; i++)
         {
             Vector3Int loadPos = new Vector3Int(pos.x + dx[i], pos.y + dy[i], 0);
-            map.SetTile(loadPos, chunk);
+            if (!tmpList.Contains(loadPos))
+            {
+                map.SetTile(loadPos, GetRandomChunk());
+            }
             checkListPos.Add(loadPos);
         }
 
@@ -69,6 +76,11 @@ public class MapGenerator : MonoBehaviour
                 map.SetTile(erasePos, null);
             }
         }
+    }
+
+    private Tile GetRandomChunk()
+    {
+        return chunks[Random.Range(0, chunks.Length)];
     }
 
     public Vector3Int GetLastChunk()
