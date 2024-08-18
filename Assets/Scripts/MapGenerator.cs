@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -86,5 +86,30 @@ public class MapGenerator : MonoBehaviour
     public Vector3Int GetLastChunk()
     {
         return lastChunkPos;
+    }
+}
+*/
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+public class MapGenerator : MonoBehaviour
+{
+    public int sizeMap = 0;
+    [SerializeField] private Tilemap map;
+    [SerializeField] private Tile chunk;
+    void Awake()
+    {
+        int n = sizeMap / 2;
+        for(int i = 0; i < sizeMap; i++)
+        {
+            for(int j = 0; j < sizeMap; j++)
+            {
+                Vector3Int pos = new Vector3Int(i - n, j - n, 0);
+                map.SetTile(pos, chunk);
+            }
+        }
     }
 }

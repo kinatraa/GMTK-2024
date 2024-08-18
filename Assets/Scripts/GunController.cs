@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +9,15 @@ public class GunController : MonoBehaviour
     [SerializeField] private float bulletSpeed = 50f;
     private float cooldownTime = 0.5f;
     private float nextFireTime = 0f;
+
+    private Transform playerTransform;
+    private PlayerMovement player;
+
+    void Start()
+    {
+        playerTransform = transform.parent;
+        player = playerTransform.GetComponent<PlayerMovement>();
+    }
 
     void Update()
     {
@@ -25,3 +34,4 @@ public class GunController : MonoBehaviour
         bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.up * bulletSpeed;
     }
 }
+
