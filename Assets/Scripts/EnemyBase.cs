@@ -11,7 +11,7 @@ public class EnemyBase : MonoBehaviour
 
     protected bool isAttacking = false;
     protected Transform target;
-    public PlayerMovement player; 
+    public PlayerMovement player;
     protected float nextAttackTime = 0f;
     protected Animator animator;
 
@@ -29,12 +29,7 @@ public class EnemyBase : MonoBehaviour
             return;
         }
 
-        float dist = Vector3.Distance(target.position, transform.position);
-
-        if (dist > attackRange)
-        {
-            MoveTowardsTarget();
-        }
+        MoveTowardsTarget();
 
         if (Time.time >= nextAttackTime)
         {
@@ -50,12 +45,9 @@ public class EnemyBase : MonoBehaviour
     {
         float dist = Vector3.Distance(target.position, transform.position);
 
-        if(dist <= attackRange)
-        {
-            return;
+        if(dist > attackRange){
+            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
         }
-
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
         Vector3 direction = target.position - transform.position;
         if (direction.x < 0 && transform.localScale.x > 0)

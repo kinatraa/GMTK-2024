@@ -22,11 +22,15 @@ public class MaggotController : EnemyBase
         isAttacking = true;
         animator.SetBool("IsAttacking", isAttacking);
 
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        float animationDuration = stateInfo.length;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.simulated = false;
 
         Shoot();
 
+        rb.simulated = true;
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        float animationDuration = stateInfo.length;
         yield return new WaitForSeconds(animationDuration);
 
         isAttacking = false;

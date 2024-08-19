@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class AcidController : MonoBehaviour
 {
+    private Animator animator;
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     void Update()
     {
-        if(!IsVisibleToCamera()){
+        if (!IsVisibleToCamera())
+        {
             Destroy(gameObject);
         }
     }
@@ -23,10 +29,16 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag("Bullet") && !collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            rb.simulated = false;
+            animator.SetBool("IsSplat", true);
         }
+    }
+
+    public void DestroyAcid()
+    {
+        Destroy(gameObject);
     }
 }
