@@ -17,10 +17,5 @@ public class BeetleController : EnemyBase
     {
         yield return StartCoroutine(base.Attack());
 
-        if (IsTargetInRange(attackRange + 1.1f))
-        {
-            Debug.Log("take damage");
-        }
-
     }
 }

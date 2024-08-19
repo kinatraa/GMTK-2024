@@ -106,7 +106,6 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Die()
     {
-        Debug.Log("Enemy has died!");
         Destroy(gameObject);
     }
 }

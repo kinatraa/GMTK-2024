@@ -13,15 +13,15 @@ TagManager:
   - Water
   - UI
   - Player
-  - Enemy
-  - Bullet
+  - Beetle
+  - Maggot
+  - MushBoom
+  - Totem
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Player's Bullet
+  - Enemy's Bullet
   - 
   - 
   - 

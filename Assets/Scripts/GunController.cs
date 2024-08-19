@@ -13,6 +13,9 @@ public class GunController : MonoBehaviour
     private Transform playerTransform;
     private PlayerMovement player;
 
+    public int maxAmmo = 20;
+    public int ammo;
+
     void Start()
     {
         playerTransform = transform.parent;
