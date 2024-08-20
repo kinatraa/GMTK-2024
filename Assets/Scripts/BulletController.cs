@@ -6,19 +6,13 @@ public class BulletController : MonoBehaviour
 {
     void Update()
     {
-        if(!IsVisibleToCamera()){
+        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+        bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+
+        if (!onScreen)
+        {
             Destroy(gameObject);
         }
-    }
-
-    private bool IsVisibleToCamera()
-    {
-        Renderer renderer = GetComponent<Renderer>();
-        if (renderer != null)
-        {
-            return renderer.isVisible;
-        }
-        return false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
