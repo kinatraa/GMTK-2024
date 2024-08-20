@@ -5,6 +5,11 @@ using UnityEngine;
 public class AcidController : MonoBehaviour
 {
     private Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     void Update()
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
@@ -22,6 +27,10 @@ public class AcidController : MonoBehaviour
         {
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             rb.simulated = false;
+
+            MaggotController x = transform.parent.GetComponent<MaggotController>();
+            x.DealDamage();
+
             animator.SetBool("IsSplat", true);
         }
     }

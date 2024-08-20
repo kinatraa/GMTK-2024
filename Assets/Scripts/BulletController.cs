@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    private float damage = 2f;
+
     void Update()
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
@@ -20,6 +22,23 @@ public class BulletController : MonoBehaviour
         if (!collision.gameObject.CompareTag("Bullet") && !collision.gameObject.CompareTag("Player"))
         {
             Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if(collision.gameObject.layer == 7){
+                BeetleController x = collision.transform.GetComponent<BeetleController>();
+                x.TakeDamage(damage);
+            }
+            if(collision.gameObject.layer == 8){
+                MaggotController x = collision.transform.GetComponent<MaggotController>();
+                x.TakeDamage(damage);
+            }
+            if(collision.gameObject.layer == 9){
+                BoomController x = collision.transform.GetComponent<BoomController>();
+                x.TakeDamage(damage);
+            }
             Destroy(gameObject);
         }
     }

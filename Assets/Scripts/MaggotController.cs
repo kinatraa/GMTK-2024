@@ -10,10 +10,11 @@ public class MaggotController : EnemyBase
     protected override void Start()
     {
         base.Start();
-        health = 10f;
+        health = 6f;
         speed = 3f;
         attackRange = 7f;
         attackCooldown = 2f;
+        damage = 5;
         bulletSpawnPoint = transform.GetChild(0);
     }
 
@@ -37,9 +38,15 @@ public class MaggotController : EnemyBase
         animator.SetBool("IsAttacking", isAttacking);
     }
 
+    public override void DealDamage()
+    {
+        base.DealDamage();
+    }
+
     private void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+        bullet.transform.SetParent(transform);
 
         Vector2 direction = (target.position - bulletSpawnPoint.position).normalized;
 

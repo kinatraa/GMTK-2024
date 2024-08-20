@@ -13,21 +13,26 @@ public class GunController : MonoBehaviour
     private Transform playerTransform;
     private PlayerMovement player;
 
-    public int maxAmmo = 20;
-    public int ammo;
+    public static int maxAmmo = 20;
+    public static int ammo;
 
     void Start()
     {
         playerTransform = transform.parent;
         player = playerTransform.GetComponent<PlayerMovement>();
+        ammo = 0;
     }
 
     void Update()
     {
         if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
         {
-            Shoot();
-            nextFireTime = Time.time + cooldownTime;
+            if (ammo > 0)
+            {
+                --ammo;
+                Shoot();
+                nextFireTime = Time.time + cooldownTime;
+            }
         }
     }
 

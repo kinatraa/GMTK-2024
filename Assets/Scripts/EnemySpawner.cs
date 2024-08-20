@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject[] enemies;
+    [SerializeField] private GameObject enemyPrefab;
     private KeyValuePair<float, float> spawnTimer = new KeyValuePair<float, float>(2, 5);
     private float spawnTime;
 
@@ -18,7 +18,11 @@ public class EnemySpawner : MonoBehaviour
         spawnTime -= Time.deltaTime;
         if (spawnTime <= 0)
         {
-            Instantiate(enemies[0], transform.position, Quaternion.identity);
+            if (transform.childCount < 5)
+            {
+                GameObject newE = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+                newE.transform.SetParent(transform, true);
+            }
             SetTimeSpawn();
         }
     }

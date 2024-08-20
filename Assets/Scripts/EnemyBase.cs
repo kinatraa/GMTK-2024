@@ -5,7 +5,7 @@ public class EnemyBase : MonoBehaviour
 {
     [SerializeField] protected float health;
     [SerializeField] protected float speed;
-    [SerializeField] protected float damage;
+    [SerializeField] protected int damage;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float attackCooldown;
 
@@ -24,7 +24,10 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!target || !IsVisibleToCamera())
+        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+        bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+
+        if (!target || !onScreen)
         {
             return;
         }
@@ -45,7 +48,8 @@ public class EnemyBase : MonoBehaviour
     {
         float dist = Vector3.Distance(target.position, transform.position);
 
-        if(dist > attackRange){
+        if (dist > attackRange)
+        {
             transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
         }
 
@@ -84,17 +88,6 @@ public class EnemyBase : MonoBehaviour
         animator.SetBool("IsAttacking", isAttacking);
     }
 
-
-    private bool IsVisibleToCamera()
-    {
-        Renderer renderer = GetComponent<Renderer>();
-        if (renderer != null)
-        {
-            return renderer.isVisible;
-        }
-        return false;
-    }
-
     public void TakeDamage(float damage)
     {
         health -= damage;
@@ -102,6 +95,10 @@ public class EnemyBase : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public virtual void DealDamage(){
+        PlayerController.health -= damage;
     }
 
     protected virtual void Die()
