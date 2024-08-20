@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
@@ -24,10 +25,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
-        bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-
-        if (!target || !onScreen)
+        if (!target || Vector3.Distance(target.position, transform.position) >= 17f)
         {
             return;
         }
@@ -88,11 +86,13 @@ public class EnemyBase : MonoBehaviour
         animator.SetBool("IsAttacking", isAttacking);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, int id)
     {
         health -= damage;
         if (health <= 0)
         {
+            GunController g = target.GetChild(0).GetComponent<GunController>();
+            g.AddBullet(id);
             Die();
         }
     }

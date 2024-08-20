@@ -19,25 +19,49 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag("Bullet") && !collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
-        }
-
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if(collision.gameObject.layer == 7){
+            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+            rb.velocity = Vector3.zero;
+
+            if (collision.gameObject.layer == 7){
                 BeetleController x = collision.transform.GetComponent<BeetleController>();
-                x.TakeDamage(damage);
+                x.TakeDamage(damage, 1);
             }
             if(collision.gameObject.layer == 8){
                 MaggotController x = collision.transform.GetComponent<MaggotController>();
-                x.TakeDamage(damage);
+                x.TakeDamage(damage, 2);
             }
             if(collision.gameObject.layer == 9){
                 BoomController x = collision.transform.GetComponent<BoomController>();
-                x.TakeDamage(damage);
+                x.TakeDamage(damage, 3);
+            }
+
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Gordo"))
+        {
+            GordoBase x = collision.transform.GetComponent<GordoBase>();
+            if(x.name == "GordoFrog")
+            {
+                if(this.name == "bullet1(Clone)")
+                {
+                    x.TakeDamage();
+                }
+            }
+            else if (x.name == "GordoFreg")
+            {
+                if (this.name == "bullet2(Clone)")
+                {
+                    x.TakeDamage();
+                }
+            }
+            else if (x.name == "GordoFrig")
+            {
+                if (this.name == "bullet3(Clone)")
+                {
+                    x.TakeDamage();
+                }
             }
             Destroy(gameObject);
         }

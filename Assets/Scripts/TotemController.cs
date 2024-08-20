@@ -44,9 +44,9 @@ public class TotemController : MonoBehaviour
 
     private void FillAmmo()
     {
-        if(GunController.ammo < GunController.maxAmmo){
-            GunController.ammo++;
-            GunController.ammo = Math.Min(GunController.ammo, GunController.maxAmmo);
+        if(GunController.ammo[0] < GunController.maxAmmo){
+            GunController.ammo[0]++;
+            GunController.ammo[0] = Math.Min(GunController.ammo[0], GunController.maxAmmo);
         }
     }
 

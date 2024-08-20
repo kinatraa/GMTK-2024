@@ -11,7 +11,7 @@ public class BoomController : EnemyBase
         speed = 8f;
         attackRange = 3f;
         attackCooldown = 1f;
-        damage = 10;
+        damage = 15;
     }
 
     protected override void MoveTowardsTarget()
@@ -61,7 +61,7 @@ public class BoomController : EnemyBase
 
     public override void DealDamage()
     {
-        if (Vector3.Distance(target.transform.position, transform.position) <= 2f)
+        if (Vector3.Distance(target.transform.position, transform.position) <= 4.2f)
         {
             base.DealDamage();
         }

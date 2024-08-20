@@ -26,6 +26,7 @@ public class AcidController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            rb.velocity = Vector2.zero;
             rb.simulated = false;
 
             MaggotController x = transform.parent.GetComponent<MaggotController>();

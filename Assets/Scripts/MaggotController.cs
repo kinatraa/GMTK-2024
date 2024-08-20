@@ -12,7 +12,7 @@ public class MaggotController : EnemyBase
         base.Start();
         health = 6f;
         speed = 3f;
-        attackRange = 7f;
+        attackRange = 10f;
         attackCooldown = 2f;
         damage = 5;
         bulletSpawnPoint = transform.GetChild(0);
