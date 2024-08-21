@@ -42,7 +42,9 @@ public class BulletController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Gordo"))
         {
             GordoBase x = collision.transform.GetComponent<GordoBase>();
-            if(x.name == "GordoFrog")
+            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+            rb.velocity = Vector3.zero;
+            if (x.name == "GordoFrog")
             {
                 if(this.name == "bullet1(Clone)")
                 {

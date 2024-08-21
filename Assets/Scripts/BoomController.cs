@@ -7,8 +7,8 @@ public class BoomController : EnemyBase
     protected override void Start()
     {
         base.Start();
-        health = 4f;
-        speed = 8f;
+        health = 2f;
+        speed = 7f;
         attackRange = 3f;
         attackCooldown = 1f;
         damage = 15;

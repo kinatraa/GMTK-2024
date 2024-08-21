@@ -14,8 +14,9 @@ public class GunController : MonoBehaviour
     private Transform playerTransform;
     private PlayerMovement player;
 
-    public static int maxAmmo = 20;
     public static int[] ammo = new int[4];
+
+    public UIController ui;
 
     void Start()
     {
@@ -23,12 +24,17 @@ public class GunController : MonoBehaviour
         player = playerTransform.GetComponent<PlayerMovement>();
         for(int i = 0; i < ammo.Length; i++)
         {
-            ammo[i] = 20;
+            ammo[i] = 0;
         }
+        ammo[0] = 20;
     }
 
     void Update()
     {
+        if (ButtonManager.onMenu)
+        {
+            return;
+        }
         if (Input.GetKey(KeyCode.Alpha1))
         {
             bulletID = 0;
@@ -45,6 +51,7 @@ public class GunController : MonoBehaviour
         {
             bulletID = 3;
         }
+        ui.SetBorder(bulletID);
         if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
         {
             if (ammo[bulletID] > 0)
@@ -64,10 +71,7 @@ public class GunController : MonoBehaviour
 
     public void AddBullet(int id)
     {
-        if (ammo[id] < 20)
-        {
-            ammo[id]++;
-        }
+        ammo[id]++;
     }
 }
 

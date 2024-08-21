@@ -20,7 +20,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         /*CheckPlayerPosition();*/
-        Movement();
+        if (!ButtonManager.onMenu)
+        {
+            Movement();
+        }
         RotatePlayerTowardsMouse();
     }
 

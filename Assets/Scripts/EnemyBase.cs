@@ -25,7 +25,8 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!target || Vector3.Distance(target.position, transform.position) >= 17f)
+        Debug.Log(health);
+        if (!target || Vector3.Distance(target.position, transform.position) >= 20f)
         {
             return;
         }

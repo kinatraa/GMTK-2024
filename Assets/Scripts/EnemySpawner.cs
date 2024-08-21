@@ -7,23 +7,27 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
     private KeyValuePair<float, float> spawnTimer = new KeyValuePair<float, float>(2, 5);
     private float spawnTime;
+    private float waitTime;
 
     private void Awake()
     {
+        waitTime = Time.time;
         SetTimeSpawn();
     }
 
     void Update()
     {
-        spawnTime -= Time.deltaTime;
-        if (spawnTime <= 0)
+        if(Time.time - waitTime >= 3f)
         {
-            if (transform.childCount < 5)
+            spawnTime -= Time.deltaTime;
+            if (spawnTime <= 0 && !PlayerController.inWaterZone)
             {
-                GameObject newE = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-                newE.transform.SetParent(transform, true);
+                if (transform.childCount < 5)
+                {
+                    Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+                }
+                SetTimeSpawn();
             }
-            SetTimeSpawn();
         }
     }
 

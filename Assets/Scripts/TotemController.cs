@@ -18,8 +18,14 @@ public class TotemController : MonoBehaviour
 
     void Update()
     {
+        if (ButtonManager.onMenu)
+        {
+            return;
+        }
         if (IsInWaterZone())
         {
+            PlayerController.inWaterZone = true;
+
             if (Time.time - healthTimer >= 2)
             {
                 Heal();
@@ -30,6 +36,10 @@ public class TotemController : MonoBehaviour
                 FillAmmo();
                 ammoTimer = Time.time;
             }
+        }
+        else
+        {
+            PlayerController.inWaterZone = false;
         }
     }
 
@@ -44,10 +54,7 @@ public class TotemController : MonoBehaviour
 
     private void FillAmmo()
     {
-        if(GunController.ammo[0] < GunController.maxAmmo){
-            GunController.ammo[0]++;
-            GunController.ammo[0] = Math.Min(GunController.ammo[0], GunController.maxAmmo);
-        }
+        GunController.ammo[0] += 2;
     }
 
     private bool IsInWaterZone()
